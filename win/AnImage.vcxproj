@@ -22,6 +22,7 @@
     <ClCompile Include="..\source\AIGifHdr.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\AIDll.h" />
     <ClInclude Include="..\include\AIGifHdr.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
