@@ -15,6 +15,8 @@ enum EGifInfo
 
 using TGifInfo = tuple<EGifInfo, int, short>;
 
-
+//! parse gif data and return its attributes, offset, size
+//! check TGifInfo size part if header type has additional size
+AIDLL TGifInfo ParseGifData(const char *pBuf, const int nSize, const int nOffset) noexcept;
 
 #endif
