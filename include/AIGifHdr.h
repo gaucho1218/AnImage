@@ -73,7 +73,7 @@ typedef struct SAiGifExtGC
 	int8_t		nTransparentColorIndex;
 
 	//! data
-};
+} SAiGifExtGC;
 
 //! Extension Comment
 typedef struct SAiGifExtComment
