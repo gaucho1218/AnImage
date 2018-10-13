@@ -64,6 +64,14 @@ int CAiGifParser::ParseLogicalScreenDesc(char *pBuf, const int nSize, const int 
 	{
 		//! @todo copy
 		pDesc = (SAiGifGlobal *)pBuf;
+
+		printf("Width: %u, Height: %u\n", pDesc->uLogicalScreenWidth, pDesc->uLogicalScreenHeight);
+		printf("GCT Flag: %d\n", pDesc->nGCTFlag);
+		printf("Color Resolution: %d\n", pDesc->nColorResolution);
+		printf("Sort Flag: %d\n", pDesc->nSortFlag);
+		printf("Size of GCT: %d\n", pDesc->nSizeOfGct);
+		printf("Background Index: %d\n", pDesc->nBackgroundColorIndex);
+		printf("Pixel Aspect Ratio: %d\n", pDesc->nPixelAspectRatio);
 	}
 
 	return nRet;
