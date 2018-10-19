@@ -5,11 +5,11 @@
 
 #include <stdint.h>
 
-#pragma pack(push, 1)
-
 const char *strGif = "GIF";
 const char *str87a = "87a";
 const char *str89a = "89a";
+
+#pragma pack(push, 1)
 
 #define AIGIF_IMG_SEPERATOR		0x2C
 #define AIGIF_EXTENSION			0x21

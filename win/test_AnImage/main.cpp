@@ -10,8 +10,6 @@
 
 int main(int argc, const char * argv[])
 {
-	printf("testing!\n");
-
 	char arrBuf[BUFSIZE];
 
 	FILE *pFile = nullptr;

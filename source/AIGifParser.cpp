@@ -2,17 +2,23 @@
 
 #include <iostream>
 #include <cstring>
-#include "AIGifHdr.h"
 #include "DebugPrint.h"
+#include "AIGifHdr.h"
 
 CAiGifParser::CAiGifParser(void)
 	: m_uLogicalWidth(0), m_uLogicalHeight(0),
-	m_nParserState(AIGIFPARSER_STATE_NONE)
+	m_nParserState(AIGIFPARSER_STATE_NONE), m_pGifGlobal(nullptr)
 {
+	m_pGifGlobal = (SAiGifGlobal *)malloc(sizeof(SAiGifGlobal));
 }
 
 CAiGifParser::~CAiGifParser(void)
 {
+	if (m_pGifGlobal != nullptr)
+	{
+		free(m_pGifGlobal);
+		m_pGifGlobal = nullptr;
+	}
 }
 
 int CAiGifParser::ParseGifData(char *pBuf, const int nSize, const int nOffset, int &nSkip)
@@ -25,7 +31,7 @@ int CAiGifParser::ParseGifData(char *pBuf, const int nSize, const int nOffset, i
 	if ((m_nParserState & AIGIFPARSER_STATE_HDR) != AIGIFPARSER_STATE_HDR)
 		nRet = ParseHeader(pBuf, nSize, nOffset);
 	else if ((m_nParserState & AIGIFPARSER_STATE_LSCRDESC) != AIGIFPARSER_STATE_LSCRDESC)
-		nRet = ParseLogicalScreenDesc(pBuf, nSize, nOffset);
+		nRet = ParseLogicalScreenDesc(pBuf, nSize, nOffset, nSkip);
 
 	return nRet;
 }
@@ -56,23 +62,24 @@ int CAiGifParser::ParseHeader(char *pBuf, const int nSize, const int nOffset)
 	return nRet;
 }
 
-int CAiGifParser::ParseLogicalScreenDesc(char *pBuf, const int nSize, const int nOffset)
+int CAiGifParser::ParseLogicalScreenDesc(char *pBuf, const int nSize, const int nOffset, int &nSkip)
 {
 	int nRet = 0;
 
-	SAiGifGlobal *pDesc;
-	if (nSize >= sizeof(SAiGifGlobal))
+	if (nSize >= sizeof(SAiGifGlobal) && m_pGifGlobal != nullptr)
 	{
-		//! @todo copy
-		pDesc = (SAiGifGlobal *)pBuf;
+		memcpy(m_pGifGlobal, pBuf, sizeof(SAiGifGlobal));
 
-		AIDebugPrint("Width: %u, Height: %u\n", pDesc->uLogicalScreenWidth, pDesc->uLogicalScreenHeight);
-		AIDebugPrint("GCT Flag: %d\n", pDesc->nGCTFlag);
-		AIDebugPrint("Color Resolution: %d\n", pDesc->nColorResolution);
-		AIDebugPrint("Sort Flag: %d\n", pDesc->nSortFlag);
-		AIDebugPrint("Size of GCT: %d\n", pDesc->nSizeOfGct);
-		AIDebugPrint("Background Index: %d\n", pDesc->nBackgroundColorIndex);
-		AIDebugPrint("Pixel Aspect Ratio: %d\n", pDesc->nPixelAspectRatio);
+		AIDebugPrint("Width: %u, Height: %u\n", m_pGifGlobal->uLogicalScreenWidth, m_pGifGlobal->uLogicalScreenHeight);
+		AIDebugPrint("GCT Flag: %d\n", m_pGifGlobal->nGCTFlag);
+		AIDebugPrint("Color Resolution: %d\n", m_pGifGlobal->nColorResolution);
+		AIDebugPrint("Sort Flag: %d\n", m_pGifGlobal->nSortFlag);
+		AIDebugPrint("Size of GCT: %d\n", m_pGifGlobal->nSizeOfGct);
+		AIDebugPrint("Background Index: %d\n", m_pGifGlobal->nBackgroundColorIndex);
+		AIDebugPrint("Pixel Aspect Ratio: %d\n", m_pGifGlobal->nPixelAspectRatio);
+
+		if (m_pGifGlobal->nGCTFlag == 1)
+			nSkip = (3 * (2 << m_pGifGlobal->nSizeOfGct));
 	}
 
 	return nRet;

@@ -12,6 +12,8 @@ using namespace std;
 #define AIGIFPARSER_STATE_IMGDESC	0x00000008
 #define AIGIFPARSER_STATE_LCT		0x00000010
 
+struct SAiGifGlobal;
+
 class CAiGifParser
 {
 public:
@@ -22,12 +24,15 @@ public:
 
 protected:
 	virtual int ParseHeader(char *pBuf, const int nSize, const int nOffset);
-	virtual int ParseLogicalScreenDesc(char *pBuf, const int nSize, const int nOffset);
+	//! skip size means GCT
+	virtual int ParseLogicalScreenDesc(char *pBuf, const int nSize, const int nOffset, int &nSkip);
 
 	uint16_t	m_uLogicalWidth;
 	uint16_t	m_uLogicalHeight;
 
 	int32_t		m_nParserState;
+
+	SAiGifGlobal	*m_pGifGlobal;
 };
 
 #endif
