@@ -31,11 +31,11 @@ typedef struct SAiGifGlobal
 	uint16_t	uLogicalScreenHeight;
 	
 	//! Packed Field
-	int8_t		nGCTFlag : 1;	//! Exist of Global Color Table
-	int8_t		nColorResolution : 3;
-	int8_t		nSortFlag : 1;
-	int8_t		nSizeOfGct : 3;	//! Size of Global Color Table
-
+	uint8_t		nGCTFlag : 1;	//! Exist of Global Color Table
+	uint8_t		nColorResolution : 3;
+	uint8_t		nSortFlag : 1;
+	uint8_t		nSizeOfGct : 3;	//! Size of Global Color Table
+	
 	int8_t		nBackgroundColorIndex;
 	int8_t		nPixelAspectRatio;
 } SAiGifGlobal;
