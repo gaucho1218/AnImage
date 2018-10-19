@@ -18,7 +18,7 @@ public:
 	CAiGifParser(void);
 	virtual ~CAiGifParser(void);
 
-	virtual int ParseGifData(char *pBuf, const int nSize, const int nOffset);
+	virtual int ParseGifData(char *pBuf, const int nSize, const int nOffset, int &nSkip);
 
 protected:
 	virtual int ParseHeader(char *pBuf, const int nSize, const int nOffset);

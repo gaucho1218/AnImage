@@ -25,6 +25,7 @@
     <ClInclude Include="..\include\AIDll.h" />
     <ClInclude Include="..\include\AIGifHdr.h" />
     <ClInclude Include="..\include\AIGifParser.h" />
+    <ClInclude Include="..\include\DebugPrint.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

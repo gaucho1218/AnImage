@@ -20,6 +20,7 @@ int main(int argc, const char * argv[])
 	int nOffset = 0;
 	int nReadSize = 0;
 	int nUsed = 0;
+	int nSkip = 0;
 	CAiGifParser tParser;
 
 	if (pFile != nullptr)
@@ -31,7 +32,7 @@ int main(int argc, const char * argv[])
 
 			int nRet = 0;
 
-			nRet = tParser.ParseGifData(arrBuf, nReadSize, nOffset);
+			nRet = tParser.ParseGifData(arrBuf, nReadSize, nOffset, nSkip);
 			if (nRet > 0)
 			{
 				nOffset += nRet;

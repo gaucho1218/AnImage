@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstring>
 #include "AIGifHdr.h"
+#include "DebugPrint.h"
 
 CAiGifParser::CAiGifParser(void)
 	: m_uLogicalWidth(0), m_uLogicalHeight(0),
@@ -14,7 +15,7 @@ CAiGifParser::~CAiGifParser(void)
 {
 }
 
-int CAiGifParser::ParseGifData(char *pBuf, const int nSize, const int nOffset)
+int CAiGifParser::ParseGifData(char *pBuf, const int nSize, const int nOffset, int &nSkip)
 {
 	if (pBuf == nullptr || nSize <= 0 || nOffset < 0)
 		return -1;
@@ -65,13 +66,13 @@ int CAiGifParser::ParseLogicalScreenDesc(char *pBuf, const int nSize, const int 
 		//! @todo copy
 		pDesc = (SAiGifGlobal *)pBuf;
 
-		printf("Width: %u, Height: %u\n", pDesc->uLogicalScreenWidth, pDesc->uLogicalScreenHeight);
-		printf("GCT Flag: %d\n", pDesc->nGCTFlag);
-		printf("Color Resolution: %d\n", pDesc->nColorResolution);
-		printf("Sort Flag: %d\n", pDesc->nSortFlag);
-		printf("Size of GCT: %d\n", pDesc->nSizeOfGct);
-		printf("Background Index: %d\n", pDesc->nBackgroundColorIndex);
-		printf("Pixel Aspect Ratio: %d\n", pDesc->nPixelAspectRatio);
+		AIDebugPrint("Width: %u, Height: %u\n", pDesc->uLogicalScreenWidth, pDesc->uLogicalScreenHeight);
+		AIDebugPrint("GCT Flag: %d\n", pDesc->nGCTFlag);
+		AIDebugPrint("Color Resolution: %d\n", pDesc->nColorResolution);
+		AIDebugPrint("Sort Flag: %d\n", pDesc->nSortFlag);
+		AIDebugPrint("Size of GCT: %d\n", pDesc->nSizeOfGct);
+		AIDebugPrint("Background Index: %d\n", pDesc->nBackgroundColorIndex);
+		AIDebugPrint("Pixel Aspect Ratio: %d\n", pDesc->nPixelAspectRatio);
 	}
 
 	return nRet;
