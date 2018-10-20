@@ -28,16 +28,27 @@ int main(int argc, const char * argv[])
 			nReadSize += nUsed;
 			nUsed = 0;
 
+			if (nSkip > 0)
+			{
+				int nMoveSize = nSkip <= nReadSize ? nSkip : nReadSize;
+				memmove(arrBuf, arrBuf + nMoveSize, BUFSIZE - nMoveSize);
+
+				nSkip -= nMoveSize;
+				nUsed = nSkip;
+				nOffset += nMoveSize;
+				continue;
+			}
+
 			int nRet = 0;
 
 			nRet = tParser.ParseGifData(arrBuf, nReadSize, nOffset, nSkip);
 			if (nRet > 0)
 			{
 				nOffset += nRet;
-				nUsed += nRet;
+				nUsed = nRet;
 			}
 
-			memmove(arrBuf, arrBuf + nUsed, BUFSIZ - nUsed);
+			memmove(arrBuf, arrBuf + nUsed, BUFSIZE - nUsed);
 		}
 
 

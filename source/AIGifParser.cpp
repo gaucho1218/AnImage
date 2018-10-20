@@ -80,6 +80,8 @@ int CAiGifParser::ParseLogicalScreenDesc(char *pBuf, const int nSize, const int 
 
 		if (m_pGifGlobal->nGCTFlag == 1)
 			nSkip = (3 * (2 << m_pGifGlobal->nSizeOfGct));
+
+		m_nParserState |= AIGIFPARSER_STATE_LSCRDESC;
 	}
 
 	return nRet;
